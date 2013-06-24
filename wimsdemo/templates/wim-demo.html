@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+    <style type="text/css">
+        .center {
+            text-align: center;
+        }
+
+        form#demoForm textarea {
+            width: 96%;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div id="demo">
+        <h1>WIMs Demo</h1>
+        <p>To get a feel for WIMs, we've put together a little demo. Type in a single sentence in the text box below, and we'll analyze the WIM for you:</p>
+
+        <form method="post"
+              action=""
+              class=""
+              id="demoForm">
+
+            <fieldset>
+                <legend>WIM Analyzer</legend>
+
+                <div id="alerts">
+                    {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <h2 class="alert-heading">{% block form_error_heading %}Whoops!{% endblock %}</h2>
+                        <p>{{ error }}<p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="clearfix"></div>
+
+                {% for field in form %}
+                <div class="control-group{% if field.errors %} error{% endif %}">
+                    <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+                    <div class="controls">
+                        {{ field }}
+                        {% if field.errors %}
+                        {% for error in field.errors %}
+                        <span class="help-inline">{{ error }}</span>
+                        {% endfor %}
+                        {% else %}
+                        <span class="help-inline"></span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="form-actions">
+                    <button class="btn btn-inverse" type="submit">Analyze</button>
+                    <button class="btn" type="reset">Clear</button>
+                    {% csrf_token %}
+                </div>
+
+            </fieldset>
+
+        </form>
+
+        {% if result %}
+        <h2>Analysis Result</h2>
+        <p class="text-muted">Analysis in {{ analyze_time }} seconds</p>
+        <pre>{{ result }}</pre>
+        {% endif %}
+
+    </div>
+{% endblock %}

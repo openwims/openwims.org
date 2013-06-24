@@ -54,6 +54,12 @@ urlpatterns = patterns("",
 
     # url("^$", "mezzanine.blog.views.blog_post_list", name="home"),
 
+    # OpenWIMs.org URLS
+    # -----------------
+    # Dynamic URLS for OpenWIMS applications. These must be *ABOVE*
+    # the catchall mezzanine.urls line below.
+    url(r'^demo/', include("wimsdemo.urls")),
+
     # MEZZANINE'S URLS
     # ----------------
     # ADD YOUR OWN URLPATTERNS *ABOVE* THE LINE BELOW.
