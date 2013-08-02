@@ -21,6 +21,10 @@
             margin: 0 auto;
             text-align: center;
         }
+
+        div.wimtree {
+            margin-bottom: 14px;
+        }
     </style>
 
     <!-- Tree building javascript -->
@@ -28,7 +32,7 @@
     <script type="text/javascript" src="{% static 'wimsdemo/js/arbor/arbor.js' %}"></script>
     <script type="text/javascript" src="{% static 'wimsdemo/js/arbor/arbor-tween.js' %}"></script>
 
-
+    {% if result %}
     <script type="text/javascript">
         function getWIMinfo(wim){
             var info = "<h1>" + wim.frame + "(" + wim.anchor + ")</h1>";
@@ -194,7 +198,7 @@
                 // our newly created renderer will have its .init() method called shortly by sys...
                 sys.renderer = Renderer("#viewport"); 
                
-                var wims = JSON.parse({{ result }});            
+                var wims = {{ result|safe }};            
             
                 for (i in wims) {
                     var wim = wims[i];
@@ -219,6 +223,7 @@
         })(this.jQuery)
         
     </script>
+    {% endif %}
 
 {% endblock %}
 
